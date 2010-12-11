@@ -4,6 +4,6 @@ class HomeController < ApplicationController
   include ApplicationHelper
 
   def index
-    @title = "Dasher - Agile management. Simplified."
+    @title = "Spengler - A bumpy journey into the semantic web."
   end
 end

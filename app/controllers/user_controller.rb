@@ -7,7 +7,7 @@ class UserController < ApplicationController
   # 
   # #####################################################
   def login
-    @title = "Dasher - Login"
+    @title = "Spengler - Login"
   end
 
 
@@ -39,7 +39,7 @@ class UserController < ApplicationController
   # 
   # #####################################################
   def my_account
-    @title = "Dasher - Your account."
+    @title = "Spengler - Your account."
   end
 
 

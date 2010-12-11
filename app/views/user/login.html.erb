@@ -1,0 +1,29 @@
+<div id="login" class="dynamictable ui-widget-content ui-corner-all ">
+  <div id="heading" class="ui-widget-header ui-corner-all dynamictable-caption dynamictable-caption-block">
+    Dasher login
+  </div>
+
+  <% form_for :user, :url => {:controller => "user", :action => "process_login"} do |form| %>
+    <table border="0">
+      <tr>
+        <td rowspan="4" style="padding: 0 1em 0 0;"><img src="/images/logo-80px.png" width="80" /></td>
+        <td><label for="name">Name:</label></td><td><%= form.text_field :name, :size => User::NAME_SIZE, :max_length => User::NAME_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="password">Password:</label></td><td><%= form.password_field :password, :size => User::PASSWORD_SIZE, :max_length => User::PASSWORD_MAX_LENGTH %></td></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td><td>Remember me <input type="checkbox" name="_spring_security_remember_me" /></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td><td><%= submit_tag "Login" %></td>
+      </tr>
+    </table>                
+  <% end %>
+  <p>
+    Forgotten your password? Click <%= link_to "here", :controller => "user", :action => "forgotten" %>.
+  </p>
+  <p>
+    Want an account, but not got one? Click <%= link_to "here", :controller => "user", :action => "register" %> now.
+  </p>
+</div>

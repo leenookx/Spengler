@@ -1,0 +1,96 @@
+    #outerWrapper {
+      background: url('static/img/login_gradient.png') repeat-x;
+      height: 300px;
+    }
+  
+    #registerWrapper {
+      width: 28em;
+      height: 15em;
+      margin: -8em 0 0 -12em;
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      border-width: 3px;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      z-index: 100;
+      overflow: visible;      
+    }
+    
+    .registerWrapperWithError {
+      height: 16em !important;
+    }
+    
+    #register {
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      margin: 1em auto;
+      width: 25em;
+    }
+    
+    #registerWrapper tr {
+      line-height: 2em;
+    }
+    
+    #disclaimer {
+      position: relative;
+      top: 10em;
+      left: 50%;
+      z-index: 101;
+      
+      width: 22em;
+      /*height: 8em;*/
+      margin: -4em 0 0 -12em;
+      padding: 0 1em;
+      
+      border-width: 3px;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      
+      font-size: 80%;
+      color: #f00;
+    }
+    
+    #disclaimer a {
+      color: rgb(30, 94, 238) !important;
+    }
+    
+    #disclaimer a:hover {
+      color:  #e50 !important;
+    }
+    
+    #agilefantText {
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      z-index: 50;
+      font-size: 72pt;
+      font-style: italic;
+      font-weight: bold;
+    }
+    
+    #agilefantText img {
+      display: block;
+      float: left;
+    }
+    
+    #agilefantText span {
+      display: block;
+      margin: 0.5em 0 0 150px;
+    }
+    
+    #footerWrapper {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 0 0 1em 0;
+      background-color: white;
+      z-index: 200;
+    }
+    
+    #footerText {
+      margin: 1em 0 0 1em;
+      white-space: nowrap;
+    }
+

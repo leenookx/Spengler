@@ -1,3 +1,5 @@
+require 'sha1'
+
 class User < ActiveRecord::Base
   NAME_MIN_LENGTH = 4
   NAME_MAX_LENGTH = 20
@@ -15,10 +17,10 @@ class User < ActiveRecord::Base
   EMAIL_SIZE = 30
 
   validates_uniqueness_of :name 
-  validates_confirmation_of :password, :on => :create
+  validates_confirmation_of :password, :on => :create, :if =>lambda { |user| user.new_record? or not user.password.blank? }
   validates_length_of :name, :within => NAME_RANGE
   validates_length_of :email, :within => EMAIL_RANGE
-  validates_length_of :password, :within => PASSWORD_RANGE
+  validates_length_of :password, :within => PASSWORD_RANGE, :if =>lambda { |user| user.new_record? or not user.password.blank? }
 
   validates_format_of     :name,
                           :with => /^[A-Z0-9_]*$/i,
@@ -31,12 +33,25 @@ class User < ActiveRecord::Base
   # Create an attribute that isn't in the database.
   attr_accessor :remember_me
 
+  attr_accessor :password
+  attr_protected :password
+
+  # #####################################################
+  #
+  # #####################################################
+  def self.hashed(str)
+    SHA1.new(str).to_s
+  end
+
   # #####################################################
   # If a user matching the credentials is found, returns the User object.
   # If no matching user is found, returns nil.
   # #####################################################
   def self.authenticate(user_info)
-    find_by_name_and_password(user_info[:name], user_info[:password])
+    user = find_by_name(user_info[:name])
+    if user && user.hashed_password == hashed(user_info[:password])
+      return user
+    end
   end
 
   # #####################################################
@@ -45,8 +60,8 @@ class User < ActiveRecord::Base
   # #####################################################
   def validate
     errors.add(:email, "must be valid.") unless email.include?("@")
-    if screen_name.include?(" ")
-      errors.add(:screen_name, "cannot include spaces.")
+    if name.include?(" ")
+      errors.add(:name, "cannot include spaces.")
     end
   end
 
@@ -98,5 +113,14 @@ class User < ActiveRecord::Base
   # #####################################################
   def remember_me?
     remember_me == "1"
+  end
+
+ private
+  before_save :update_password
+
+  def update_password
+    if not password.blank?
+      self.hashed_password = self.class.hashed(password)
+    end
   end
 end 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101211123057) do
+ActiveRecord::Schema.define(:version => 20101212183218) do
 
   create_table "audit_trails", :force => true do |t|
     t.integer  "user_id",                    :null => false
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(:version => 20101211123057) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "password"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hashed_password"
   end
 
 end

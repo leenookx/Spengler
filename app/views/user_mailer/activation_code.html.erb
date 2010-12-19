@@ -1,0 +1,17 @@
+<html>
+<head>
+</head>
+<body>
+<img src="http://spengler.purplemonkeys.co.uk/images/logo_email.png"/>
+<p>
+Hello <%= @user.name %>,
+</p>
+<p>
+Thank you for signing up for <a href="http://spengler.purplemonkeys.co.uk">Spengler</A>. In order to activate your new account you must click on the link below:
+</p>
+<p>
+http://spengler.purplemonkeys.co.uk/user/activate/<%= @activation.code %>
+</p>
+</body>
+</html>
+

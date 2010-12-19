@@ -46,6 +46,8 @@ module ApplicationHelper
   end
 
   def generate_unique_code
-    Digest::SHA1.hexdigest([Time.now, rand].join)
+    code = Digest::SHA1.hexdigest([Time.now, rand].join)
+    puts code
+    return code
   end
 end

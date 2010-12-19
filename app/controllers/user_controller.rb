@@ -85,7 +85,13 @@ class UserController < ApplicationController
       if @user.save
         flash[:message] = "User #{@user.name} has been registered."
 
-        AuditTrail.create_registration_entry(session, request.remote_ip)
+        AuditTrail.create_registration_entry(request.remote_ip, @user.id)
+
+        a = Activation.new
+        a.user_id = @user.id
+        a.save
+
+        Delayed::Job.enqueue( UserCodeSenderJob.new(@user.id, request.remote_ip) )
 
         redirect_to session[:return_to] || '/'
       end

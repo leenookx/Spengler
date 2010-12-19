@@ -24,17 +24,17 @@ class AuditTrail < ActiveRecord::Base
     end
   end
 
-  def self.create_reminder_entry(user, ip)
+  def self.create_code_sent_entry(user, ip)
     a = AuditTrail.new
     a.user_id = user.id
-    a.log_entry = "Requested a password reminder from " + ip + "."
+    a.log_entry = "Sent an activation code " + ip + "."
     a.save
   end
 
-  def self.create_failed_reminder_entry(entry, ip_address)
+  def self.create_failed_code_sent_entry(entry, ip)
     a = AuditTrail.new
-    a.user_id = 0
-    a.log_entry = "Failed reminder for '" + entry + "' from " + ip_address + "."
+    a.user_id = entry
+    a.log_entry = "Failed reminder requested from " + ip + "."
     a.save
   end
 
@@ -49,13 +49,6 @@ class AuditTrail < ActiveRecord::Base
     a = AuditTrail.new
     a.user_id = user.id
     a.log_entry = "Avatar image failed."
-    a.save
-  end
-
-  def self.create_tag_ingested(user)
-    a = AuditTrail.new
-    a.user_id = user.id
-    a.log_entry = "New tag ingested."
     a.save
   end
 

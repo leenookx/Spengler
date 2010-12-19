@@ -44,4 +44,8 @@ module ApplicationHelper
     status = SystemStatus.first
     return status.status
   end
+
+  def generate_unique_code
+    Digest::SHA1.hexdigest([Time.now, rand].join)
+  end
 end

@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101219095451) do
+ActiveRecord::Schema.define(:version => 20101219113857) do
+
+  create_table "activations", :id => false, :force => true do |t|
+    t.string   "code",       :null => false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activations", ["code"], :name => "index_activations_on_code", :unique => true
 
   create_table "audit_trails", :force => true do |t|
     t.integer  "user_id",                    :null => false

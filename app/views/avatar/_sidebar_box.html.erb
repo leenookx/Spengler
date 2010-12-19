@@ -1,0 +1,4 @@
+<%= avatar_tag(@user) %>
+<br clear="all"/>
+<p><span id="avatar_edit_link" class="popup_link">(Change)</span></p>
+<%= render :partial => 'avatar/upload', :locals => {:user => @user} %>

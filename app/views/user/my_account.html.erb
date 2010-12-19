@@ -1,3 +1,6 @@
-  <h1>Account Info</h1>
-
-  <p>Your username is <%= User.find(session[:id]).name %> 
+<div id="profile-sidebar">
+  <%= render :partial => 'avatar/sidebar_box' %>
+</div>
+<div id="profile-main">
+  <%= render :partial => 'main_view', :locals => {:user => @user} %>
+</div>

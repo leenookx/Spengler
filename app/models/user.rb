@@ -139,6 +139,10 @@ class User < ActiveRecord::Base
     user = find_by_name(user_info[:name])
   end
 
+  def avatar
+    Avatar.new(self)
+  end
+
  private
   before_save :update_password
 

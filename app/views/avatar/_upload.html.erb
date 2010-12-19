@@ -1,0 +1,18 @@
+<div id="avatar_edit_popup" class="popup" style="display:none">
+  <% form_for(:user, @user, :url => 'avatar/upload', :html => {:multipart => true}) do |form| %>
+    <legend>Change your current profile picture:</legend>
+    <br>
+    <%= error_messages_for 'avatar' %>
+    <%= avatar_tag(@user) %>
+    <br>
+    <div class="form_row">
+        <label for="new_avatar">Select new image:</label>
+        <%= form.file_field :avatar %>
+    </div>
+
+    <%= submit_tag 'Upload', :class => 'popup_closebox' %>
+    <%= tag :input, :type => 'button', :value => 'Cancel', :class => 'popup_closebox' %>
+    <%= hidden_field_tag :back, :value => request.path %>
+  <% end %>
+</div>
+<%= javascript_tag "new Popup('avatar_edit_popup', 'avatar_edit_link', {modal:true});" %>

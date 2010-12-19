@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101219183041) do
+ActiveRecord::Schema.define(:version => 20101219191119) do
 
   create_table "activations", :id => false, :force => true do |t|
     t.string   "code",       :null => false
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(:version => 20101219183041) do
     t.datetime "updated_at"
     t.string   "hashed_password"
     t.integer  "status",          :default => 0
+    t.string   "forename"
+    t.string   "surname"
   end
 
 end

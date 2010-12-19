@@ -83,7 +83,7 @@ class UserController < ApplicationController
       @user = User.new(params[:user])
       @user.password = "password"
       if @user.save
-        flash[:message] = "User #{@user.name} has been registered."
+        flash[:message] = "User #{@user.name} has been registered. You will receive an activation code via email."
 
         AuditTrail.create_registration_entry(request.remote_ip, @user.id)
 
@@ -94,6 +94,47 @@ class UserController < ApplicationController
         Delayed::Job.enqueue( UserCodeSenderJob.new(@user.id, request.remote_ip) )
 
         redirect_to session[:return_to] || '/'
+      end
+    end
+  end
+
+  # #####################################################
+  # 
+  # #####################################################
+  def activate
+    if request.get?
+      @activation = Activation.find_by_code(params[:id])
+      if @activation
+        @title = "Spengler - Activate Your Account"
+      else
+        flash[:message] = "Invalid activation code."
+        redirect_to '/'
+      end
+    elsif request.post? and params[:user]
+      activation = Activation.find_by_code(params[:id])
+      if activation
+        if params[:user][:password] == params[:user][:password_confirm]
+          @user = User.find(activation.user_id)
+          if @user
+            @user.update_attributes( params[:user] )
+            @user.password = params[:user][:password]
+            
+            if @user.save
+              flash[:message] = "Thank you. Your user is now active."
+              redirect_to '/'
+            else
+              flash[:error] = "Unable to save the user."
+            end
+          else
+            flash[:error] = "Invalid user."
+            redirect_to '/'
+          end
+        else
+          flash[:error] = "Passwords don't match."
+        end
+      else
+        flash[:error] = "Invalid activation code."
+        redirect_to '/'
       end
     end
   end

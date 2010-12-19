@@ -10,13 +10,22 @@ class User < ActiveRecord::Base
   PASSWORD_MIN_LENGTH = 4
   PASSWORD_MAX_LENGTH = 40
 
+  FORENAME_MIN_LENGTH = 2
+  FORENAME_MAX_LENGTH = 20
+  SURNAME_MIN_LENGTH = 4
+  SURNAME_MAX_LENGTH = 20
+
   NAME_RANGE = NAME_MIN_LENGTH..NAME_MAX_LENGTH
   EMAIL_RANGE = EMAIL_MIN_LENGTH..EMAIL_MAX_LENGTH
   PASSWORD_RANGE = PASSWORD_MIN_LENGTH..PASSWORD_MAX_LENGTH
+  FORENAME_RANGE = FORENAME_MIN_LENGTH..FORENAME_MAX_LENGTH
+  SURNAME_RANGE = SURNAME_MIN_LENGTH..SURNAME_MAX_LENGTH
 
   NAME_SIZE = 20
   PASSWORD_SIZE = 20
   EMAIL_SIZE = 30
+  FORENAME_SIZE = 20
+  SURNAME_SIZE = 20
 
   STATUS_AWAITING_VALIDATION = 0
   STATUS_OK = 1
@@ -27,6 +36,8 @@ class User < ActiveRecord::Base
   validates_length_of :name, :within => NAME_RANGE
   validates_length_of :email, :within => EMAIL_RANGE
   validates_length_of :password, :within => PASSWORD_RANGE, :if =>lambda { |user| user.new_record? or not user.password.blank? }
+  validates_length_of :forename, :within => FORENAME_RANGE
+  validates_length_of :surname, :within => SURNAME_RANGE
 
   validates_format_of     :name,
                           :with => /^[A-Z0-9_]*$/i,
@@ -41,6 +52,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   attr_protected :password
+
+  attr_accessor :password_confirm
 
   # #####################################################
   #

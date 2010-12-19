@@ -1,4 +1,6 @@
+# ####################################################################################
 # Methods added to this helper will be available to all templates in the application.
+# ####################################################################################
 module ApplicationHelper
   #require 'string'
 
@@ -36,5 +38,10 @@ module ApplicationHelper
     u = User.find_by_id( session[:user_id] ) if logged_in?
 
     return u.admin
+  end
+
+  def site_mode
+    status = SystemStatus.first
+    return status.status
   end
 end

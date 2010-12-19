@@ -22,62 +22,69 @@
     </div>
     </td>
     <td width="30%">
-    <% if !logged_in? %>
-      <div id="login-box">
-        <p align="right"><%= link_to "Forgotten your password?", :controller => "email", :action => "remind" %></p>
-        <% form_for :user, @user, :url => {:controller => "user", :action => "process_login"} do |f| %>
-          <table align="right">
-            <tr>
-              <td>
-                <%= f.text_field :name,
-                                 :size => User::NAME_SIZE, 
-                                 :maxlength => User::NAME_MAX_LENGTH %>
-              </td>
-              <td>
-                <%= f.password_field :password,
-                                     :size => User::PASSWORD_SIZE,
-                                     :maxlength => User::PASSWORD_MAX_LENGTH %>
-              </td>
-              <td>
-                <%= image_submit_tag "/images/sign_in.png", 
-                                        :border => 0, 
-                                      :class => 'image-submit' %>
-              </td>
-            </tr>
-          </table>
-        <% end %>
-        <p align="right"></p>
+    <% current_mode = site_mode %>
+    <%= current_mode %>
+    <% if current_mode == 0 %>
+      <div id="empty">
       </div>
     <% else %>
-      <% @user = User.find(session[:id]) %>
-      <div id="empty-login">
-        <table align="right">
-         <tr>
-          <td>
-            <p align="right">You are logged in as:</p>
-            <table>
+      <% if !logged_in? %>
+        <div id="login-box">
+          <p align="right"><%= link_to "Forgotten your password?", :controller => "email", :action => "remind" %></p>
+          <% form_for :user, @user, :url => {:controller => "user", :action => "process_login"} do |f| %>
+            <table align="right">
               <tr>
                 <td>
-                  <%= @user.name + " (" + @user.email + ")  " %>
+                  <%= f.text_field :name,
+                                   :size => User::NAME_SIZE, 
+                                   :maxlength => User::NAME_MAX_LENGTH %>
                 </td>
                 <td>
-                  <%= link_to image_tag("sign_out.png", :border => 0), 
-                              :controller => "user", 
-                              :action => "logout" %>
+                  <%= f.password_field :password,
+                                       :size => User::PASSWORD_SIZE,
+                                       :maxlength => User::PASSWORD_MAX_LENGTH %>
+                </td>
+                <td>
+                  <%= image_submit_tag "/images/sign_in.png", 
+                                        :border => 0, 
+                                        :class => 'image-submit' %>
                 </td>
               </tr>
             </table>
-          </td>
-          <td>
-            <% avatar_filename = 'avatars/' + @user.name + '_thumbnail.png' %>
-            <% avatar_filename = File.exists?(File.join(RAILS_ROOT, "public", "images", avatar_filename)) ? avatar_filename : "avatars/empty_avatar_thumbnails.jpg" %>
-            <%= link_to image_tag(avatar_filename, :border => 0),
-                        :controller => "user", :action => "my_account" %></a>
-          </td>
-        </tr>
-        </table>
-      </div>
-    <% end %> 
+          <% end %>
+          <p align="right"></p>
+        </div>
+      <% else %>
+        <% @user = User.find(session[:id]) %>
+        <div id="empty-login">
+          <table align="right">
+           <tr>
+            <td>
+              <p align="right">You are logged in as:</p>
+              <table>
+                <tr>
+                  <td>
+                    <%= @user.name + " (" + @user.email + ")  " %>
+                  </td>
+                  <td>
+                    <%= link_to image_tag("sign_out.png", :border => 0), 
+                                :controller => "user", 
+                                :action => "logout" %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <% avatar_filename = 'avatars/' + @user.name + '_thumbnail.png' %>
+              <% avatar_filename = File.exists?(File.join(RAILS_ROOT, "public", "images", avatar_filename)) ? avatar_filename : "avatars/empty_avatar_thumbnails.jpg" %>
+              <%= link_to image_tag(avatar_filename, :border => 0),
+                          :controller => "user", :action => "my_account" %></a>
+            </td>
+          </tr>
+          </table>
+        </div>
+      <% end %>
+    <% end %>
    </td>
     <!-- END PAGE HEADER CONTAINER -->
   </tr>

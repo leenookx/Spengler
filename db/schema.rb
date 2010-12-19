@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101219081853) do
+ActiveRecord::Schema.define(:version => 20101219091158) do
 
   create_table "audit_trails", :force => true do |t|
     t.integer  "user_id",                    :null => false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20101219081853) do
     t.datetime "updated_at"
   end
 
-  create_table "systemstatus", :id => false, :force => true do |t|
+  create_table "system_statuses", :id => false, :force => true do |t|
     t.integer "status", :default => 0
   end
 

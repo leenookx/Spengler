@@ -3609,3 +3609,18 @@ BODY:first-of-type ul.as-list, x:-moz-any-link, x:default { /* Target FF 3.5+ */
   margin-right: 75px;
 }
 
+
+#profile-main {
+  width: auto;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  float: center;
+}
+
+#profile_left_column {
+  float: left;
+  width: 250px;
+  height: 600px;
+}

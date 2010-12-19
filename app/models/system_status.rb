@@ -1,2 +1,6 @@
 class SystemStatus < ActiveRecord::Base
+  STATUS_DEACTIVATED = 0
+  STATUS_LIMITED_BETA = 1
+  STATUS_NORMAL = 2
+  STATUS_MAINTENANCE = 3
 end

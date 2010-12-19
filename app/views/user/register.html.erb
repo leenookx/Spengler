@@ -7,6 +7,7 @@
 
 <%= error_messages_for 'user' %>
 
+<% if site_mode == SystemStatus::STATUS_NORMAL %>
 <div id="register" class="dynamictable ui-widget-content ui-corner-all ">
   <div id="heading" class="ui-widget-header ui-corner-all dynamictable-caption dynamictable-caption-block">
     Register with Spengler
@@ -27,3 +28,6 @@
     </table>
   <% end %>
 </div>
+<% else %>
+  <p>Sorry, registrations are disabled at this time.</p>
+<% end %>

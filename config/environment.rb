@@ -3,6 +3,10 @@
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+DB_STRING_MAX_LENGTH = 255
+DB_TEXT_MAX_LENGTH = 40000
+HTML_TEXT_FIELD_SIZE = 15
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -33,7 +37,32 @@ Rails::Initializer.run do |config|
   # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
 
+  # Your secret key for verifying cookie session data integrity.
+  # If you change this key, all old sessions will become invalid!
+  # Make sure the secret is at least 30 characters and all random, 
+  # no regular words or you'll be exposed to dictionary attacks.
+  config.action_controller.session = {
+    :session_key => '_Spengler_session',
+    :secret      => 'xxx'
+  }
+
+  # Use the database for sessions instead of the cookie-based default,
+  # which shouldn't be used to store highly confidential information
+  # (create the session table with "rake db:sessions:create")
+  config.action_controller.session_store = :active_record_store
+
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.smtp_settings = {
+    :address => "server",
+    :port => 25,
+    :domain => "domain",
+    :authentication => :login,
+    :user_name => "user",
+    :password => "password",
+}
+

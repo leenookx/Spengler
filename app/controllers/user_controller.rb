@@ -15,21 +15,35 @@ class UserController < ApplicationController
   # 
   # #####################################################
   def process_login
-    if @user = User.authenticate(params[:user])
-      session[:id] = @user.id # Remember the user's id during this session
+    if request.post? && params[:user]
+      @user = User::FindByName(params[:user])
+      if @user
+        if @user.status == User::STATUS_OK
+          if @user.authenticate?(params[:user])
+            session[:id] = @user.id # Remember the user's id during this session
 
-      if @user.remember_me?
-        @user.remember!(cookies)
+            if @user.remember_me?
+              @user.remember!(cookies)
+            else
+              @user.forget!(cookies)
+            end
+
+            AuditTrail.create_login_entry(session, request.remote_ip)
+
+            redirect_to session[:return_to] || '/'
+          end
+        else
+          if @user.status == User::STATUS_AWAITING_VALIDATION
+          elsif @user.status == User::STATUS_DISABLED
+          else
+          end
+        end
       else
-        @user.forget!(cookies)
+        flash[:error] = 'Invalid login.'
+        redirect_to :action => 'login', :name => params[:user][:name]
       end
-
-      AuditTrail.create_login_entry(session, request.remote_ip)
-
-      redirect_to session[:return_to] || '/'
     else
-      flash[:error] = 'Invalid login.'
-      redirect_to :action => 'login', :name => params[:user][:name]
+      redirect_to '/'
     end
   end
 
@@ -66,6 +80,9 @@ class UserController < ApplicationController
       @user.password = "password"
       if @user.save
         flash[:message] = "User #{@user.name} has been registered."
+
+        AuditTrail.create_registration_entry(session, request.remote_ip)
+
         redirect_to session[:return_to] || '/'
       end
     end

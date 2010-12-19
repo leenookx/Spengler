@@ -53,13 +53,10 @@ class User < ActiveRecord::Base
   # If a user matching the credentials is found, returns the User object.
   # If no matching user is found, returns nil.
   # #####################################################
-  def self.authenticate(user_info)
-    user = find_by_name(user_info[:name])
-    if user 
-      if user.status == User::STATUS_OK 
-        if user.hashed_password == hashed(user_info[:password])
-          return user
-        end
+  def authenticate?(user_info)
+    if status == User::STATUS_OK 
+      if hashed_password == User::hashed(user_info[:password])
+        return true
       end
     end
   end
@@ -123,6 +120,10 @@ class User < ActiveRecord::Base
   # #####################################################
   def remember_me?
     remember_me == "1"
+  end
+
+  def self.FindByName(user_info)
+    user = find_by_name(user_info[:name])
   end
 
  private

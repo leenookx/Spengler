@@ -126,7 +126,7 @@ class UserController < ApplicationController
               # We can also remove the activation.
               activation.destroy
 
-              redirect_to '/'
+              redirect_to :action => 'my_account'
             else
               flash[:error] = "Unable to save the user."
             end

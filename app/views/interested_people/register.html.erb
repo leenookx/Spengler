@@ -1,0 +1,32 @@
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
+    <% content_tag :script, :type => "text/javascript" do %>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+<% end %>
+
+<%= error_messages_for 'user' %>
+
+<div id="register" class="dynamictable ui-widget-content ui-corner-all ">
+  <div id="heading" class="ui-widget-header ui-corner-all dynamictable-caption dynamictable-caption-block">
+    Register with Spengler
+  </div>
+
+  <% form_for :interested_people do |form| %>
+    <table border="0">
+      <tr>
+        <td rowspan="4" style="padding: 0 1em 0 0;"><img src="/images/logo-80px.png" width="80" /></td>
+        <td><label for="first_name">First Name:</label></td><td><%= form.text_field :first_name, :size => InterestedPeople::FORENAME_SIZE, :max_length => InterestedPeople::FORENAME_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="last_name">Last Name:</label></td><td><%= form.text_field :last_name, :size => InterestedPeople::SURNAME_SIZE, :max_length => InterestedPeople::SURNAME_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="email">Email:</label></td><td><%= form.text_field :email, :size => User::EMAIL_SIZE, :max_length => User::EMAIL_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td><td><%= submit_tag "Register" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

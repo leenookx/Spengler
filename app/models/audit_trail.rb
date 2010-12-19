@@ -57,5 +57,12 @@ class AuditTrail < ActiveRecord::Base
     a.user_id = user.id
     a.log_entry = "New tag ingested."
     a.save
-  end    
+  end
+
+  def self.create_preregistration_entry(ip_address, id)
+    a = AuditTrail.new
+    a.user_id = id
+    a.log_entry = "New pre-registration from " + ip_address
+    a.save
+  end
 end

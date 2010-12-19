@@ -9,11 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101219091158) do
+ActiveRecord::Schema.define(:version => 20101219095451) do
 
   create_table "audit_trails", :force => true do |t|
     t.integer  "user_id",                    :null => false
     t.string   "log_entry",  :default => ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "interested_peoples", :force => true do |t|
+    t.string   "first_name", :null => false
+    t.string   "last_name",  :null => false
+    t.string   "email",      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

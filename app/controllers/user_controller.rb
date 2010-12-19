@@ -7,7 +7,7 @@ class UserController < ApplicationController
   # 
   # #####################################################
   def login
-    @title = "Dasher - Login"
+    @title = "Spengler - Login"
   end
 
 
@@ -51,7 +51,7 @@ class UserController < ApplicationController
   # 
   # #####################################################
   def my_account
-    @title = "Dasher - Your account."
+    @title = "Spengler - Your account."
   end
 
 
@@ -60,7 +60,7 @@ class UserController < ApplicationController
   # #####################################################
   def register
     if request.get?
-      @title = "Register"
+      @title = "Spengler - Register"
     elsif request.post? and params[:user]
       @user = User.new(params[:user])
       @user.password = "password"

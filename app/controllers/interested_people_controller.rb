@@ -6,7 +6,7 @@ class InterestedPeopleController < ApplicationController
   # #####################################################
   def register
     if request.get?
-      @title = "Spengler - Register Your Interest"
+      @title = "Spengler - Pre-register Your Interest"
     elsif request.post? and params[:interested_people]
       @user = InterestedPeople.new(params[:interested_people])
       if @user.save

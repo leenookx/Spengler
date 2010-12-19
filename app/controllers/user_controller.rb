@@ -118,9 +118,14 @@ class UserController < ApplicationController
           if @user
             @user.update_attributes( params[:user] )
             @user.password = params[:user][:password]
+            @user.status = User::STATUS_OK
             
             if @user.save
               flash[:message] = "Thank you. Your user is now active."
+
+              # We can also remove the activation.
+              activation.destroy
+
               redirect_to '/'
             else
               flash[:error] = "Unable to save the user."

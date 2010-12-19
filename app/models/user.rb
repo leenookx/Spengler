@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   PASSWORD_SIZE = 20
   EMAIL_SIZE = 30
 
+  STATUS_AWAITING_VALIDATION = 0
+  STATUS_OK = 1
+  STATUS_DISABLED = 2
+
   validates_uniqueness_of :name 
   validates_confirmation_of :password, :on => :create, :if =>lambda { |user| user.new_record? or not user.password.blank? }
   validates_length_of :name, :within => NAME_RANGE
@@ -51,8 +55,12 @@ class User < ActiveRecord::Base
   # #####################################################
   def self.authenticate(user_info)
     user = find_by_name(user_info[:name])
-    if user && user.hashed_password == hashed(user_info[:password])
-      return user
+    if user 
+      if user.status == User::STATUS_OK 
+        if user.hashed_password == hashed(user_info[:password])
+          return user
+        end
+      end
     end
   end
 

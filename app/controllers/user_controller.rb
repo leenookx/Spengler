@@ -20,7 +20,8 @@ class UserController < ApplicationController
       if @user
         if @user.status == User::STATUS_OK
           if @user.authenticate?(params[:user])
-            session[:id] = @user.id # Remember the user's id during this session
+            # Remember the user's id during this session
+            session[:id] = @user.id
 
             if @user.remember_me?
               @user.remember!(cookies)
@@ -31,6 +32,9 @@ class UserController < ApplicationController
             AuditTrail.create_login_entry(session, request.remote_ip)
 
             redirect_to session[:return_to] || '/'
+          else
+            flash[:error] = 'Invalid login.'
+            redirect_to :action => 'login', :name => params[:user][:name]
           end
         else
           if @user.status == User::STATUS_AWAITING_VALIDATION

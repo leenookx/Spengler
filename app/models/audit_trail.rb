@@ -2,7 +2,7 @@ class AuditTrail < ActiveRecord::Base
 
   def self.create_login_entry(session, ip)
     a = AuditTrail.new
-    a.user_id = session[:user_id]
+    a.user_id = session[:id]
     # Ok, so only save the record if there is a user id, otherwise the
     # database will chuck a wobbly.
     if a.user_id
@@ -13,7 +13,7 @@ class AuditTrail < ActiveRecord::Base
 
   def self.create_logout_entry(session, ip)
     a = AuditTrail.new
-    a.user_id = session[:user_id]
+    a.user_id = session[:id]
     # Ok, so only save the record if there is a user id, otherwise the
     # database will chuck a wobbly.
     # Best I can tell, we only really get here when the users' session

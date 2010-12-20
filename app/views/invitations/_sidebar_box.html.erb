@@ -1,0 +1,8 @@
+<br clear="all"/>
+<% if @user.invitation_limit > 0 %>
+  <% form_for :invitation, :url => {:controller => "invitation", :action => "new"} do |f| %>
+    <%= f.text_field :email, :size => Invitation::EMAIL_SIZE, :max_length => Invitation::EMAIL_MAX_LENGTH %>
+    <%= submit_tag "Invite" %>
+  <% end %>
+<% end %>
+<p><%= @user.invitation_limit %> invitations remaining.</p>

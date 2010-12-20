@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101219191119) do
+ActiveRecord::Schema.define(:version => 20101220074756) do
 
   create_table "activations", :id => false, :force => true do |t|
     t.string   "code",       :null => false
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(:version => 20101219191119) do
     t.datetime "updated_at"
   end
 
+  create_table "invitations", :id => false, :force => true do |t|
+    t.integer  "user_id"
+    t.string   "code",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "email"
+  end
+
+  add_index "invitations", ["code"], :name => "index_invitations_on_code"
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -75,9 +85,10 @@ ActiveRecord::Schema.define(:version => 20101219191119) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hashed_password"
-    t.integer  "status",          :default => 0
+    t.integer  "status",           :default => 0
     t.string   "forename"
     t.string   "surname"
+    t.integer  "invitation_limit"
   end
 
 end

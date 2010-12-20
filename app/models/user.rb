@@ -135,17 +135,27 @@ class User < ActiveRecord::Base
     remember_me == "1"
   end
 
+  # ##################################################################
+  #
+  # ##################################################################
   def self.FindByName(user_info)
     user = find_by_name(user_info[:name])
   end
 
+  # ##################################################################
+  #
+  # ##################################################################
   def avatar
     Avatar.new(self)
   end
 
  private
+
   before_save :update_password
 
+  # ##################################################################
+  #
+  # ##################################################################
   def update_password
     if not password.blank?
       self.hashed_password = self.class.hashed(password)

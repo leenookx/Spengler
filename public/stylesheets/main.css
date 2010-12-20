@@ -3619,7 +3619,7 @@ BODY:first-of-type ul.as-list, x:-moz-any-link, x:default { /* Target FF 3.5+ */
   float: center;
 }
 
-#profile_left_column {
+#profile-sidebar {
   float: left;
   width: 250px;
   height: 600px;

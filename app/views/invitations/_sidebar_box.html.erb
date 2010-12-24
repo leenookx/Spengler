@@ -1,8 +1,12 @@
 <br clear="all"/>
 <% if @user.invitation_limit > 0 %>
-  <% form_for :invitation, :url => {:controller => "invitation", :action => "new"} do |f| %>
-    <%= f.text_field :email, :size => Invitation::EMAIL_SIZE, :max_length => Invitation::EMAIL_MAX_LENGTH %>
-    <%= submit_tag "Invite" %>
+  <% form_remote_tag :html => { :action => url_for(:controller => "invitation", 
+                                                   :action => "new") }, 
+                     :update => "invitations-remaining" do %>
+    <%= text_field_tag :email, '', :size => Invitation::EMAIL_SIZE, :max_length => Invitation::EMAIL_MAX_LENGTH %>
+    <%= submit_tag "Invite", :disable_with => "Wait..." %>
   <% end %>
 <% end %>
+<div id="invitations-remaining">
 <p><%= @user.invitation_limit %> invitations remaining.</p>
+</div>

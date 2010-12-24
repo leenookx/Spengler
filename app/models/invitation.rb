@@ -7,7 +7,7 @@ class Invitation < ActiveRecord::Base
 
   EMAIL_RANGE = EMAIL_MIN_LENGTH..EMAIL_MAX_LENGTH
 
-  EMAIL_SIZE = 30
+  EMAIL_SIZE = 20
 
   validate :recipient_is_not_registered
   validate :sender_has_invitations, :if => :sender
@@ -16,8 +16,7 @@ class Invitation < ActiveRecord::Base
                           :with => /^[A-Z0-9._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i,
                           :message => "must be a valid email address."
 
-  before_create :generate_token
-  before_create :decrement_sender_count, :if => :sender
+  before_save :generate_token
 
  private
 
@@ -25,7 +24,7 @@ class Invitation < ActiveRecord::Base
   #
   # ##################################################################
   def recipient_is_not_registered
-    errors.add :recipient_email, 'is already registered' if User.find_by_email(recipient_email)
+    errors.add :recipient_email, 'is already registered' if User.find_by_email(self.email) || Invitation.find_by_email( self.email )
   end
 
   # ##################################################################

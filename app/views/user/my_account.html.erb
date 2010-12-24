@@ -3,5 +3,12 @@
   <%= render :partial => 'invitations/sidebar_box' %>
 </div>
 <div id="profile-main">
+  <% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
+    <% content_tag :script, :type => "text/javascript" do %>
+      setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+  <% end %>
+
   <%= render :partial => 'main_view', :locals => {:user => @user} %>
 </div>

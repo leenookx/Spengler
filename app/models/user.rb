@@ -164,6 +164,12 @@ class User < ActiveRecord::Base
         # Send out the invite at this point...
         Delayed::Job.enqueue( UserInviteJob.new(self.id, ip) )
 
+        # Create a friendship link between the two users.
+        friend = Friend.new
+        friend.from = invitation.user_id
+        friend.to = self.id
+        friend.save
+
         return true
       else
         return false

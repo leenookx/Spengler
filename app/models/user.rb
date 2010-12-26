@@ -149,6 +149,30 @@ class User < ActiveRecord::Base
     Avatar.new(self)
   end
 
+  # ##################################################################
+  # Invite someone to join this site
+  # ##################################################################
+  def invite?(email_address)
+    invitation = Invitation.new
+    invitation.email = email_address
+    if (self.invitation_limit > 0) && invitation
+      invitation.user_id = self.id
+      if invitation.save
+        self.invitation_limit -= 1
+
+        # TODO: Actually send out the invite at this point...
+
+        self.save
+
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+
  private
 
   before_save :update_password

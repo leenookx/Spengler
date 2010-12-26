@@ -40,13 +40,6 @@ class Invitation < ActiveRecord::Base
   #
   # ##################################################################
   def generate_token
-    self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
-  end
-
-  # ##################################################################
-  #
-  # ##################################################################
-  def decrement_sender_count
-    sender.decrement! :invitation_limit
+    self.code = Digest::SHA1.hexdigest([Time.now, rand].join)
   end
 end

@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  include ApplicationHelper
   layout 'standard'
   before_filter :login_required, :only => :my_account
 
@@ -141,6 +142,30 @@ class UserController < ApplicationController
         flash[:error] = "Invalid activation code."
         redirect_to '/'
       end
+    end
+  end
+
+  # ##################################################################
+  # Invite someone to the site based on this users' friends.
+  # ##################################################################
+  def invite
+    if request.post?
+      if logged_in?
+        if @user.invite?( params[:email] )
+          flash[:notice] = "Thank you, invitation sent."
+          render :update do |page|
+            page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining'
+            page.visual_effect :highlight, 'invitations-remaining'
+          end
+        else
+          flash[:error] = "Something went wrong. Please panic."
+        end
+      else
+        flash[:error] = "You are not logged in and cannot use that function."
+        redirect_to root_url
+      end
+    else
+      redirect_to root_url
     end
   end
 end

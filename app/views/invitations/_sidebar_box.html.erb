@@ -7,4 +7,7 @@
     <%= submit_tag "Invite", :disable_with => "Wait..." %>
   <% end %>
 <% end %>
-<%= render :partial => "invitations/invitations_remaining" %>
+<div id="invitations-remaining">
+<%= render :partial => "invitations/invitations_remaining", :locals => { :user => @user } %>
+</div>
+

@@ -154,15 +154,13 @@ class UserController < ApplicationController
         if @user.invite?( params[:email] )
           flash[:notice] = "Thank you, invitation sent."
           render :update do |page|
-            page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining'
-            page.visual_effect :highlight, 'invitations-remaining'
+            page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining', :locals => { :user => @user }
           end
         else
           flash[:error] = "Something went wrong. Please panic."
         end
       else
-        flash[:error] = "You are not logged in and cannot use that function."
-        redirect_to root_url
+        flash[:error] = "You are not logged in and cannot use this function."
       end
     else
       redirect_to root_url

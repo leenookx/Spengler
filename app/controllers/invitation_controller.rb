@@ -14,30 +14,31 @@ class InvitationController < ApplicationController
   # #####################################################
   def activate
     if request.get?
-      @invite = Invite.find_by_code(params[:id])
-      if @invite
+      invite = Invitation.find_by_code(params[:id])
+      if invite
         @title = "Spengler - Activate Your Invitation"
       else
         flash[:message] = "Invalid invitation code."
         redirect_to root_url
       end
     elsif request.post? and params[:user]
-      invite = Invite.find_by_code(params[:id])
+      invite = Invitation.find_by_code(params[:id])
       if invite
         if params[:user][:password] == params[:user][:password_confirm]
-          @user = User.find(activation.user_id)
+          @user = User.new( params[ :user ] )
           if @user
-            @user.update_attributes( params[:user] )
+            @user.email = invite.email
+            #@user.update_attributes( params[:user] )
             @user.password = params[:user][:password]
             @user.status = User::STATUS_OK
             
             if @user.save
               flash[:message] = "Thank you. Your user is now active."
 
-              # We can also remove the activation.
-              activation.destroy
+              # We can also now remove the invitation.
+              invite.destroy
 
-              redirect_to :action => 'my_account'
+              redirect_to :controller => 'user', :action => 'my_account'
             else
               flash[:error] = "Unable to save the user."
             end

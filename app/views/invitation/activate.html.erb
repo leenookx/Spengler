@@ -10,7 +10,7 @@
 <% if site_mode == SystemStatus::STATUS_NORMAL %>
 <div id="register" class="dynamictable ui-widget-content ui-corner-all ">
   <div id="heading" class="ui-widget-header ui-corner-all dynamictable-caption dynamictable-caption-block">
-    Activate Your Account
+    Create Your Account
   </div>
 
   <% form_for :user do |form| %>
@@ -20,13 +20,20 @@
           <img src="/images/logo-80px.png" width="80" />
         </td>
         <td>
+          <label for="name">Screenname:</label>
+        </td>
+        <td>
+          <%= form.text_field :name, :size => User::NAME_SIZE, :max_length => User::NAME_MAX_LENGTH %>
+        </td>
+      </tr>
+      <tr>
+        <td>
           <label for="forname">Forename:</label>
         </td>
         <td>
           <%= form.text_field :forename, :size => User::FORENAME_SIZE, :max_length => User::FORENAME_MAX_LENGTH %>
         </td>
-      </tr>
-      <tr>
+      </tr>      <tr>
         <td>
           <label for="surname">Surname:</label>
         </td>

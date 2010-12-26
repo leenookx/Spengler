@@ -32,7 +32,7 @@ class UserController < ApplicationController
 
             AuditTrail.create_login_entry(session, request.remote_ip)
 
-            redirect_to session[:return_to] || '/'
+            redirect_to session[:return_to] || root_url
           else
             flash[:error] = 'Invalid login.'
             redirect_to :action => 'login', :name => params[:user][:name]
@@ -48,7 +48,7 @@ class UserController < ApplicationController
         redirect_to :action => 'login', :name => params[:user][:name]
       end
     else
-      redirect_to '/'
+      redirect_to root_url
     end
   end
 
@@ -94,7 +94,7 @@ class UserController < ApplicationController
 
         Delayed::Job.enqueue( UserCodeSenderJob.new(@user.id, request.remote_ip) )
 
-        redirect_to session[:return_to] || '/'
+        redirect_to session[:return_to] || root_url
       end
     end
   end
@@ -109,7 +109,7 @@ class UserController < ApplicationController
         @title = "Spengler - Activate Your Account"
       else
         flash[:message] = "Invalid activation code."
-        redirect_to '/'
+        redirect_to root_url
       end
     elsif request.post? and params[:user]
       activation = Activation.find_by_code(params[:id])
@@ -133,14 +133,14 @@ class UserController < ApplicationController
             end
           else
             flash[:error] = "Invalid user."
-            redirect_to '/'
+            redirect_to root_url
           end
         else
           flash[:error] = "Passwords don't match."
         end
       else
         flash[:error] = "Invalid activation code."
-        redirect_to '/'
+        redirect_to root_url
       end
     end
   end
@@ -157,10 +157,16 @@ class UserController < ApplicationController
             page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining', :locals => { :user => @user }
           end
         else
-          flash[:error] = "Something went wrong. Please panic."
+          flash[:error] = "Couldn't create the invitation. Probably there is already a pending invite for that email address."
+          render :update do |page|
+            page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining', :locals => { :user => @user }
+          end
         end
       else
         flash[:error] = "You are not logged in and cannot use this function."
+        render :update do |page|
+          page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining', :locals => { :user => @user }
+        end
       end
     else
       redirect_to root_url

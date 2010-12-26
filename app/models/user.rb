@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
         self.save
 
         # Send out the invite at this point...
-        Delayed::Job.enqueue( UserInviteJob.new(@user.id, request.remote_ip) )
+        Delayed::Job.enqueue( UserInviteJob.new(self.id, request.remote_ip) )
 
         return true
       else

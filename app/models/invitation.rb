@@ -24,7 +24,7 @@ class Invitation < ActiveRecord::Base
   #
   # ##################################################################
   def recipient_is_not_registered
-    errors.add :recipient_email, 'is already registered' if User.find_by_email(self.email) || Invitation.find_by_email( self.email )
+    errors.add :email, 'is already registered' if User.find_by_email(self.email) || Invitation.find_by_email( self.email )
   end
 
   # ##################################################################

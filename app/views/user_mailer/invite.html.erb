@@ -1,0 +1,20 @@
+<html>
+<head>
+</head>
+<body>
+<img src="http://spengler.purplemonkeys.co.uk/images/logo_email.png"/>
+<p>
+Hello,
+</p>
+<p>
+A friend of yours (or someone you know) <%= @user.email %> is already a member of the <a href="http://spengler.purplemonkeys.co.uk">Spengler</a> site, and thinks that you would benefit from using it.
+</p>
+<p>
+In order to activate your new account you must click on the link below:
+</p>
+<p>
+http://spengler.purplemonkeys.co.uk/invite/activate/<%= @invite.code %>
+</p>
+</body>
+</html>
+

@@ -65,4 +65,18 @@ class AuditTrail < ActiveRecord::Base
     a.log_entry = "New registration from " + ip_address
     a.save
   end
+
+  def self.create_invite_sent_entry(id, ip_address)
+    a = AuditTrail.new
+    a.user_id = id
+    a.log_entry = "Invitation sent thanks to " + ip_address
+    a.save
+  end
+
+  def self.create_failed_invite_sent_entry(id, ip_address)
+    a = AuditTrail.new
+    a.user_id = id
+    a.log_entry = "Invitation failed. " + ip_address
+    a.save
+  end
 end

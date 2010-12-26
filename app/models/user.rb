@@ -159,10 +159,10 @@ class User < ActiveRecord::Base
       invitation.user_id = self.id
       if invitation.save
         self.invitation_limit -= 1
-
-        # TODO: Actually send out the invite at this point...
-
         self.save
+
+        # Send out the invite at this point...
+        Delayed::Job.enqueue( UserInviteJob.new(@user.id, request.remote_ip) )
 
         return true
       else

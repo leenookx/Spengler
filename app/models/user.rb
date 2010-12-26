@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
   # ##################################################################
   # Invite someone to join this site
   # ##################################################################
-  def invite?(email_address)
+  def invite?(email_address, ip)
     invitation = Invitation.new
     invitation.email = email_address
     if (self.invitation_limit > 0) && invitation
@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
         self.save
 
         # Send out the invite at this point...
-        Delayed::Job.enqueue( UserInviteJob.new(self.id, request.remote_ip) )
+        Delayed::Job.enqueue( UserInviteJob.new(self.id, ip) )
 
         return true
       else
@@ -176,6 +176,7 @@ class User < ActiveRecord::Base
  private
 
   before_save :update_password
+  before_save :check_invites
 
   # ##################################################################
   #
@@ -183,6 +184,15 @@ class User < ActiveRecord::Base
   def update_password
     if not password.blank?
       self.hashed_password = self.class.hashed(password)
+    end
+  end
+
+  # ##################################################################
+  #
+  # ##################################################################
+  def check_invites
+    if invitation_limit.blank?
+      self.invitation_limit = 5
     end
   end
 end 

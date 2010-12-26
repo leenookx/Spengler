@@ -151,7 +151,7 @@ class UserController < ApplicationController
   def invite
     if request.post?
       if logged_in?
-        if @user.invite?( params[:email] )
+        if @user.invite?( params[:email], request.remote_ip )
           flash[:notice] = "Thank you, invitation sent."
           render :update do |page|
             page.replace_html 'invitations-remaining', :partial => 'invitations/invitations_remaining', :locals => { :user => @user }

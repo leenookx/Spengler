@@ -7,6 +7,7 @@ class LinksController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @links }
+      format.json { render :json => @links }
     end
   end
 
@@ -18,6 +19,7 @@ class LinksController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @link }
+      format.json { render :json => @link }
     end
   end
 
@@ -29,6 +31,7 @@ class LinksController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @link }
+      format.json { render :json => @link }
     end
   end
 

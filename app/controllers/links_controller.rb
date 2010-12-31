@@ -85,18 +85,26 @@ class LinksController < ApplicationController
         format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
       end
     else
-      link = Link.new(params[:links])
-
+      link = Link.find_by_url( params[:links][:url] )
+      if !link
+        link = Link.new(params[:links])
+      end 
+        
       respond_to do |format|
         if link.save
+          userlink = UserLink.new
+          userlink.user_id = user.id
+          userlink.link_id = link.id
+          userlink.save
+
           flash[:notice] = 'Link was successfully created.'
           format.html { redirect_to(link) }
           format.xml  { render :xml => link, :status => :created, :location => link }
           format.json { render :json => link, :status => :created, :location => link }
         else
           format.html { render :action => "new" }
-          format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
-          format.json { render :json => @link.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => link.errors, :status => :unprocessable_entity }
+          format.json { render :json => link.errors, :status => :unprocessable_entity }
         end
       end
     end

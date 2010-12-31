@@ -72,7 +72,7 @@ class LinksController < ApplicationController
   # #####################################################
   def create
 
-    user = valid_user( request.headers["authentication-token"] )
+    user = valid_user( request.headers["authentication-token"] || params[:auth_code] )
     if user.nil?
       respond_to do |format|
         format.html do

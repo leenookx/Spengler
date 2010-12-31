@@ -1,6 +1,7 @@
 require 'sha1'
 
 class User < ActiveRecord::Base
+  include ApplicationHelper
   has_one :activation, :dependent => :destroy
   has_many :user_links
 
@@ -184,6 +185,7 @@ class User < ActiveRecord::Base
 
   before_save :update_password
   before_save :check_invites
+  before_save :generate_authentication_code
 
   # ##################################################################
   #
@@ -191,6 +193,10 @@ class User < ActiveRecord::Base
   def update_password
     if not password.blank?
       self.hashed_password = self.class.hashed(password)
+
+      # When we change the password, we're also going to force a change of the authentication_code
+      authentication_code = ""
+      generate_authentication_code
     end
   end
 
@@ -200,6 +206,15 @@ class User < ActiveRecord::Base
   def check_invites
     if invitation_limit.blank?
       self.invitation_limit = 5
+    end
+  end
+
+  # ##################################################################
+  #
+  # ##################################################################
+  def generate_authentication_code
+    if authentication_code.blank?
+      authentication_code = generate_unique_code
     end
   end
 end 

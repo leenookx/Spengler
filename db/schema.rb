@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101226210419) do
+ActiveRecord::Schema.define(:version => 20101231133247) do
 
   create_table "activations", :id => false, :force => true do |t|
     t.string   "code",       :null => false
@@ -108,10 +108,11 @@ ActiveRecord::Schema.define(:version => 20101226210419) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hashed_password"
-    t.integer  "status",           :default => 0
+    t.integer  "status",              :default => 0
     t.string   "forename"
     t.string   "surname"
     t.integer  "invitation_limit"
+    t.string   "authentication_code"
   end
 
 end

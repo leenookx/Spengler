@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(:version => 20101226210419) do
 
   add_index "invitations", ["code"], :name => "index_invitations_on_code"
 
+  create_table "links", :force => true do |t|
+    t.text     "url",                        :null => false
+    t.text     "description"
+    t.string   "keywords"
+    t.integer  "status",      :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -84,6 +93,13 @@ ActiveRecord::Schema.define(:version => 20101226210419) do
 
   create_table "system_statuses", :id => false, :force => true do |t|
     t.integer "status", :default => 0
+  end
+
+  create_table "user_links", :id => false, :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "link_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

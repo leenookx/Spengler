@@ -17,7 +17,13 @@
     <table border="0">
       <tr>
         <td rowspan="4" style="padding: 0 1em 0 0;"><img src="/images/logo-80px.png" width="80" /></td>
-        <td><label for="name">Name:</label></td><td><%= form.text_field :name, :size => User::NAME_SIZE, :max_length => User::NAME_MAX_LENGTH %></td>
+        <td><label for="name">Screen Name:</label></td><td><%= form.text_field :name, :size => User::NAME_SIZE, :max_length => User::NAME_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="forename">Forename:</label></td><td><%= form.text_field :forename, :size => User::FORENAME_SIZE, :max_length => User::FORENAME_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="surname">Surname:</label></td><td><%= form.text_field :surname, :size => User::SURNAME_SIZE, :max_length => User::SURNAME_MAX_LENGTH %></td>
       </tr>
       <tr>
         <td><label for="email">Email:</label></td><td><%= form.text_field :email, :size => User::EMAIL_SIZE, :max_length => User::EMAIL_MAX_LENGTH %></td>

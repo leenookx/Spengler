@@ -1,0 +1,2 @@
+module UserLinksHelper
+end

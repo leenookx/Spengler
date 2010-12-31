@@ -1,0 +1,18 @@
+<h1>Listing user_links</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @user_links.each do |user_link| %>
+  <tr>
+    <td><%= link_to 'Show', user_link %></td>
+    <td><%= link_to 'Edit', edit_user_link_path(user_link) %></td>
+    <td><%= link_to 'Destroy', user_link, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New user_link', new_user_link_path %>

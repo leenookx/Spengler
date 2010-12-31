@@ -2,6 +2,7 @@ require 'sha1'
 
 class User < ActiveRecord::Base
   has_one :activation, :dependent => :destroy
+  has_many :user_links
 
   NAME_MIN_LENGTH = 4
   NAME_MAX_LENGTH = 20

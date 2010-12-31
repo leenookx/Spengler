@@ -72,19 +72,22 @@ class LinksController < ApplicationController
   # #####################################################
   def create
 
-    user = valid_user( params[:auth] )
-    if !user
+    user = valid_user( request.headers["authentication-token"] )
+    if user.nil?
       respond_to do |format|
         format.html do
           flash[:error] = 'Not authenticated.'
           redirect_to root_url
         end
 
-        format.xml { head :error }
+        format.xml { render :xml => { :status => :error, :message => 'Invalid authentication code.'}.to_xml, :status => 403 }
 
         format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
       end
     else
+
+      puts "user is ok"
+
       link = Link.find_by_url( params[:links][:url] )
       if !link
         link = Link.new(params[:links])
@@ -151,6 +154,10 @@ class LinksController < ApplicationController
   def valid_user(params)
     return @user unless @user.nil?
 
-    return User.find_by_authentication_code(params[:auth])
+    if params && !params.empty?
+      return User.find_by_authentication_code( params )
+    else
+      return nil
+    end
   end
 end

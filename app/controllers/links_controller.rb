@@ -85,9 +85,6 @@ class LinksController < ApplicationController
         format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
       end
     else
-
-      puts "user is ok"
-
       link = Link.find_by_url( params[:links][:url] )
       if !link
         link = Link.new(params[:links])

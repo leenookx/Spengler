@@ -1,11 +1,31 @@
-<h1>New link</h1>
-
-<% form_for(@link) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
+    <% content_tag :script, :type => "text/javascript" do %>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
 <% end %>
 
-<%= link_to 'Back', links_path %>
+<%= error_messages_for 'user' %>
+
+<div id="create-link" class="dynamictable ui-widget-content ui-corner-all ">
+  <div id="heading" class="ui-widget-header ui-corner-all dynamictable-caption dynamictable-caption-block">
+    Create New Link
+  </div>
+
+  <% form_for :links, :url => { :action => "create"} do |form| %>
+    <table border="0">
+      <tr>
+        <td><label for="url">URL:</label></td><td><%= form.text_field :url, :size => Links::URL_SIZE, :max_length => Links::URL_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="description">Description:</label></td><td><%= form.text_area :description, :size => Links::DESCRIPTION_SIZE, :max_length => Links::DESCRIPTION_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td><label for="keywords">Keywords:</label></td><td><%= form.text_field :keywords, :size => Links::KEYWORDS_SIZE, :max_length => Links::KEYWORDS_MAX_LENGTH %></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td><td><%= submit_tag "Add" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

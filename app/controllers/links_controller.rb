@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  layout 'standard'
 
   # #####################################################
   # Normally this would return all of the records in the
@@ -34,16 +35,27 @@ class LinksController < ApplicationController
   end
 
   # #####################################################
-  # GET /links/new
-  # GET /links/new.xml
+  # Presents an HTML page for adding new links to the
+  # system.
+  #   GET /links/new
+  #   GET /links/new.xml
+  #   GET /links/new.json
   # #####################################################
   def new
-    @link = Link.new
+    if !@user
+      flash[:error] = 'That function is not available until you are logged in.'
+      respond_to do |format|
+        format.html { redirect_to root_url }
+      end
+    else
+      @link = Link.new
+      @title = "Add a new link"
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @link }
-      format.json { render :json => @link }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @link }
+        format.json { render :json => @link }
+      end
     end
   end
 
@@ -59,36 +71,32 @@ class LinksController < ApplicationController
   # POST /links.xml
   # #####################################################
   def create
-    if !params[:auth]
-      flash[:error] = 'Not authenticated.'
+
+    user = valid_user( params[:auth] )
+    if !user
       respond_to do |format|
-        format.html { redirect_to root_url }
-        format.xml  { head :error }
-        format.json { render :json => { :status => :error, :message => 'Could not be added'}.to_json, :status => 400 }
+        format.html do
+          flash[:error] = 'Not authenticated.'
+          redirect_to root_url
+        end
+
+        format.xml { head :error }
+
+        format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
       end
     else
-      @user = User.find_by_authentication_code(params[:auth])
-      if @user
-        @link = Link.new(params[:link])
+      link = Link.new(params[:links])
 
-        respond_to do |format|
-          if @link.save
-            flash[:notice] = 'Link was successfully created.'
-            format.html { redirect_to(@link) }
-            format.xml  { render :xml => @link, :status => :created, :location => @link }
-            format.json { render :json => @link, :status => :created, :location => @link }
-          else
-            format.html { render :action => "new" }
-            format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
-            format.json { render :json => @link.errors, :status => :unprocessable_entity }
-          end
-        end
-      else
-        flash[:error] = 'Invalid authentication code.'
-        respond_to do |format|
-          format.html { redirect_to root_url }
-          format.xml  { head :error }
-          format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
+      respond_to do |format|
+        if link.save
+          flash[:notice] = 'Link was successfully created.'
+          format.html { redirect_to(link) }
+          format.xml  { render :xml => link, :status => :created, :location => link }
+          format.json { render :json => link, :status => :created, :location => link }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+          format.json { render :json => @link.errors, :status => :unprocessable_entity }
         end
       end
     end
@@ -125,5 +133,16 @@ class LinksController < ApplicationController
       format.html { redirect_to(links_url) }
       format.xml  { head :ok }
     end
+  end
+
+ private
+
+  # #####################################################
+  # 
+  # #####################################################
+  def valid_user(params)
+    return @user unless @user.nil?
+
+    return User.find_by_authentication_code(params[:auth])
   end
 end

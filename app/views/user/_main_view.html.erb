@@ -15,4 +15,8 @@
     <td>Email</td>
     <td><%= @user.email %>
   </tr>
+  <tr>
+    <td>Bookmarklet</td>
+    <td><a href="<%= render :partial => 'bookmarklet', :locals => {:user => user} %>">Post on Spengler</a> (drag to your toolbar)</td>
+  </tr>
 </table>

@@ -18,6 +18,9 @@
         <td><label for="url">URL:</label></td><td><%= form.text_field :url, :size => Links::URL_SIZE, :max_length => Links::URL_MAX_LENGTH %></td>
       </tr>
       <tr>
+        <td><label for="title">Title:</label></td><td><%= form.text_field :title, :size => Links::TITLE_SIZE, :max_length => Links::TITLE_MAX_LENGTH %></td>
+      </tr>
+      <tr>
         <td><label for="description">Description:</label></td><td><%= form.text_area :description, :size => Links::DESCRIPTION_SIZE, :max_length => Links::DESCRIPTION_MAX_LENGTH %></td>
       </tr>
       <tr>

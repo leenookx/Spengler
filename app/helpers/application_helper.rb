@@ -41,7 +41,7 @@ module ApplicationHelper
   end
 
   def site_mode
-    return 1
+    return APP_CONFIG['mode']
   end
 
   def generate_unique_code

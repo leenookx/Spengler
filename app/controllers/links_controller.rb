@@ -88,6 +88,14 @@ class LinksController < ApplicationController
       link = Link.find_by_url( params[:links][:url] )
       if !link
         link = Link.new(params[:links])
+
+        if !link
+          respond_to do |format|
+            format.html { render :action => "new" }
+            format.xml  { render :xml => link.errors, :status => :unprocessable_entity }
+            format.json { render :json => link.errors, :status => :unprocessable_entity }
+          end
+        end
       end 
         
       respond_to do |format|

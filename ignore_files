@@ -16,4 +16,5 @@ config/environments/development.rb
 README
 RELEASE
 VERSION
+lib/tasks/cucumber.rake
 

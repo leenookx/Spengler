@@ -9,9 +9,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101231133247) do
+ActiveRecord::Schema.define(:version => 20110102122751) do
 
-  create_table "activations", :id => false, :force => true do |t|
+  create_table "activations", :force => true do |t|
     t.string   "code",       :null => false
     t.integer  "user_id"
     t.datetime "created_at"

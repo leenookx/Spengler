@@ -16,6 +16,10 @@
     <td><%= @user.email %>
   </tr>
   <tr>
+    <td>Auth Code</td>
+    <td><%= @user.authentication_code %>
+  </tr>
+  <tr>
     <td>Bookmarklet</td>
     <td><a href="<%= render :partial => 'bookmarklet', :locals => {:user => user} %>">Spenglerise</a> (drag to your toolbar)</td>
   </tr>

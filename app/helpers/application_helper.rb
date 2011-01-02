@@ -41,8 +41,7 @@ module ApplicationHelper
   end
 
   def site_mode
-    status = SystemStatus.first
-    return status.status
+    return 1
   end
 
   def generate_unique_code

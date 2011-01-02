@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     @body["user"] = user
     @body["activation"] = activation
     @recipients = user.email
-    @from = 'Spengler <spengler@purplemonkeys.co.uk>'
+    @from = EMAIL_CONFIG['email_from']
   end
 
   def invite(invite, user)
@@ -17,6 +17,6 @@ class UserMailer < ActionMailer::Base
     @body["user"] = user
     @body["invite"] = invite
     @recipients = invite.email
-    @from = 'Spengler <spengler@purplemonkeys.co.uk>'
+    @from = EMAIL_CONFIG['email_from']
   end
 end

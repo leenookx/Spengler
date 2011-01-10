@@ -1,5 +1,5 @@
 class Links < ActiveRecord::Base
-  has_many :user_links
+  has_many :user_links, :polymorphic => true
 
   URL_MIN_LENGTH = 10
   TITLE_MIN_LENGTH = 0

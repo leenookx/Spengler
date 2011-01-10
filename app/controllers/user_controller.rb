@@ -172,4 +172,21 @@ class UserController < ApplicationController
       redirect_to root_url
     end
   end
+
+  # ##################################################################
+  # Display the users url feed
+  # ##################################################################
+  def feed
+    @user = User.find_by_authentication_code(params[:id])
+
+    if @user
+      @user_links = UserLinks.find_all_by_user_id( @user.id )
+      if @user_links
+        respond_to do |format|
+          format.atom
+        end
+      end
+    else
+    end
+  end
 end

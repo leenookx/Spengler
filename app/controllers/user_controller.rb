@@ -178,16 +178,31 @@ class UserController < ApplicationController
   # Display the users url feed
   # ##################################################################
   def feed
-    @user = User.find_by_authentication_code(params[:id])
+    @user = valid_user( request.headers["authentication-token"] || params[:auth_code] )
 
     if @user
-      @user_links = UserLinks.find_all_by_user_id( @user.id )
+      @user_links = UserLinks.find_all_by_user_id(@user.id, :limit => 20, :order => "updated_at desc")
       if @user_links
-        respond_to do |format|
-          format.atom
-        end
+        render :layout => false
+        response.headers['Content-Type'] = "application/xml; charset=utf-8"
+      else
       end
     else
+    end
+  end
+
+ private
+
+  # #####################################################
+  # 
+  # #####################################################
+  def valid_user(params)
+    return @user unless @user.nil?
+
+    if params && !params.empty?
+      return User.find_by_authentication_code( params )
+    else
+      return nil
     end
   end
 end

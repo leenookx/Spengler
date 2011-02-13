@@ -5,6 +5,7 @@
   </tr>
 
 <% @user_links.each do |user_link| %>
+  <% user_link %>
   <tr>
     <td><%= link_to 'Show', user_link %></td>
     <td><%= link_to 'Edit', edit_user_link_path(user_link) %></td>

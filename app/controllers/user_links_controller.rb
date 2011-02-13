@@ -1,17 +1,38 @@
 class UserLinksController < ApplicationController
+
+  # ##################################################### 
   # GET /user_links
   # GET /user_links.xml
+  # ##################################################### 
   def index
-    @user_links = UserLink.all
+    user = valid_user( request.headers["authentication-token"] || params[:auth_code] )
+    if !user.nil?
+      # Get the latest links added by the logged in (or specified) user.
+      @user_links = UserLink.find_all_by_user_id(user.id, :limit => 20, :order => "updated_at desc")
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @user_links }
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @user_links }
+        format.json  { render :json => @user_links }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          flash[:error] = 'Not authenticated.'
+          redirect_to root_url
+        end
+
+        format.xml { render :xml => { :status => :error, :message => 'Invalid authentication code.'}.to_xml, :status => 403 }
+
+        format.json { render :json => { :status => :error, :message => 'Invalid authentication code.'}.to_json, :status => 403 }
+      end
     end
   end
 
+  # ##################################################### 
   # GET /user_links/1
   # GET /user_links/1.xml
+  # ##################################################### 
   def show
     @user_link = UserLink.find(params[:id])
 
@@ -21,8 +42,10 @@ class UserLinksController < ApplicationController
     end
   end
 
+  # ##################################################### 
   # GET /user_links/new
   # GET /user_links/new.xml
+  # ##################################################### 
   def new
     @user_link = UserLink.new
 
@@ -32,13 +55,17 @@ class UserLinksController < ApplicationController
     end
   end
 
+  # ##################################################### 
   # GET /user_links/1/edit
+  # ##################################################### 
   def edit
     @user_link = UserLink.find(params[:id])
   end
 
+  # ##################################################### 
   # POST /user_links
   # POST /user_links.xml
+  # ##################################################### 
   def create
     @user_link = UserLink.new(params[:user_link])
 
@@ -54,8 +81,10 @@ class UserLinksController < ApplicationController
     end
   end
 
+  # ##################################################### 
   # PUT /user_links/1
   # PUT /user_links/1.xml
+  # ##################################################### 
   def update
     @user_link = UserLink.find(params[:id])
 
@@ -71,8 +100,10 @@ class UserLinksController < ApplicationController
     end
   end
 
+  # ##################################################### 
   # DELETE /user_links/1
   # DELETE /user_links/1.xml
+  # ##################################################### 
   def destroy
     @user_link = UserLink.find(params[:id])
     @user_link.destroy
@@ -80,6 +111,21 @@ class UserLinksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(user_links_url) }
       format.xml  { head :ok }
+    end
+  end
+
+ private
+
+  # #####################################################
+  # 
+  # #####################################################
+  def valid_user(params)
+    return @user unless @user.nil?
+
+    if params && !params.empty?
+      return User.find_by_authentication_code( params )
+    else
+      return nil
     end
   end
 end

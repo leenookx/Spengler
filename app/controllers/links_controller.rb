@@ -11,6 +11,11 @@ class LinksController < ApplicationController
   # don't want prying eyes looking into our database!
   # #####################################################
   def index
+    # There are times when the incoming XMLHTTPRequest object used for injecting the
+    # URLs' into the database (usually via the POST -> /links page) uses an OPTIONS
+    # request prior to performing the POST. We need to catch that here and deal with
+    # it otherwise we end up with a redirect.
+    # This is to deal with XHR2 / CORS requests.
     if request.method == :options
         render :nothing => true, :status => 204
         response.headers['Access-Control-Allow-Origin'] = '*'

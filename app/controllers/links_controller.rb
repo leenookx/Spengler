@@ -11,12 +11,17 @@ class LinksController < ApplicationController
   # don't want prying eyes looking into our database!
   # #####################################################
   def index
+    if request.method == :options
+        render :nothing => true, :status => 204
+        response.headers['Access-Control-Allow-Origin'] = '*'
+    else
     respond_to do |format|
       flash[:error] = 'Function not available.'
       format.html { redirect_to root_url }
       format.xml  { render :xml => @links }
       format.json { render :json => { :status => :error, :message => 'This function is not available'}.to_json, :status => 403 }
     end
+end
   end
 
   # #####################################################

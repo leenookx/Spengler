@@ -178,16 +178,22 @@ class UserController < ApplicationController
   # Display the users url feed
   # ##################################################################
   def feed
-    @user = valid_user( request.headers["authentication-token"] || params[:auth_code] )
+    @user = valid_user( request.headers["authentication-token"] || params[:auth_code] || params[:id] )
 
     if @user
       @user_links = UserLinks.find_all_by_user_id(@user.id, :limit => 20, :order => "updated_at desc")
       if @user_links
-        render :layout => false
-        response.headers['Content-Type'] = "application/xml; charset=utf-8"
+        render(:layout => false, 
+               :locals => { :username => @user.name, :user_links => @user_links })
       else
+        # TODO: What should we do here?
+        flash[:warning] = "You have not Spengalised anything yet."
+        redirect_to root_url
       end
     else
+      puts "Not logged in"
+      flash[:error] = "You are not logged in and cannot use this function."
+      redirect_to root_url
     end
   end
 

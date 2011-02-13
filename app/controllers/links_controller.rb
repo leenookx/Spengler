@@ -17,16 +17,16 @@ class LinksController < ApplicationController
     # it otherwise we end up with a redirect.
     # This is to deal with XHR2 / CORS requests.
     if request.method == :options
-        render :nothing => true, :status => 204
-        response.headers['Access-Control-Allow-Origin'] = '*'
+      render :nothing => true, :status => 204
+      response.headers['Access-Control-Allow-Origin'] = '*'
     else
-    respond_to do |format|
-      flash[:error] = 'Function not available.'
-      format.html { redirect_to root_url }
-      format.xml  { render :xml => @links }
-      format.json { render :json => { :status => :error, :message => 'This function is not available'}.to_json, :status => 403 }
+      respond_to do |format|
+        flash[:error] = 'Function not available.'
+        format.html { redirect_to root_url }
+        format.xml  { render :xml => @links }
+        format.json { render :json => { :status => :error, :message => 'This function is not available'}.to_json, :status => 403 }
+      end
     end
-end
   end
 
   # #####################################################
@@ -80,7 +80,6 @@ end
   # POST /links.xml
   # #####################################################
   def create
-
     user = valid_user( request.headers["authentication-token"] || params[:auth_code] )
     if user.nil?
       respond_to do |format|

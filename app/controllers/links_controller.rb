@@ -11,7 +11,6 @@ class LinksController < ApplicationController
   # don't want prying eyes looking into our database!
   # #####################################################
   def index
-
     respond_to do |format|
       flash[:error] = 'Function not available.'
       format.html { redirect_to root_url }

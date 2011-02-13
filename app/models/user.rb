@@ -196,7 +196,6 @@ class User < ActiveRecord::Base
 
       # When we change the password, we're also going to force a change of the authentication_code
       authentication_code = ""
-      generate_authentication_code
     end
   end
 
@@ -213,8 +212,8 @@ class User < ActiveRecord::Base
   #
   # ##################################################################
   def generate_authentication_code
-    if authentication_code.blank?
-      authentication_code = generate_unique_code
+    if self.authentication_code.blank?
+      self.authentication_code = generate_unique_code
     end
   end
 end 

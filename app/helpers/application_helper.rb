@@ -2,7 +2,6 @@
 # Methods added to this helper will be available to all templates in the application.
 # ####################################################################################
 module ApplicationHelper
-  #require 'string'
 
   # #####################################################
   # Determines if the user is currently logged in or not
@@ -11,14 +10,16 @@ module ApplicationHelper
     not session[:id].nil?
   end
 
+
   # #####################################################
   #
   # #####################################################
   def nav_link(text, controller, action="index")
-    return link_to_unless_current text, {:controller => controller,
+    return link_to_unless_current(text, {:controller => controller,
                                         :action => action},
-                                        {:class => "small-navigation"}
+                                        {:class => "small-navigation"})
   end
+
 
   # #####################################################
   #
@@ -31,6 +32,7 @@ module ApplicationHelper
     content_tag("div", "#{label} #{form_field}", :class => "form_row")
   end
 
+
   # #####################################################
   #
   # #####################################################
@@ -40,10 +42,18 @@ module ApplicationHelper
     return u.admin
   end
 
+
+  # #####################################################
+  #
+  # #####################################################
   def site_mode
     return APP_CONFIG['mode']
   end
 
+
+  # #####################################################
+  #
+  # #####################################################
   def generate_unique_code
     code = Digest::SHA1.hexdigest([Time.now, rand].join)
     puts code

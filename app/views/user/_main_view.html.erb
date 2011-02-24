@@ -23,4 +23,8 @@
     <td>Bookmarklet</td>
     <td><a href="<%= render :partial => 'bookmarklet', :locals => {:user => user} %>">Spenglerise</a> (drag to your toolbar)</td>
   </tr>
+  <tr>
+    <td>RSS Feed</td>
+    <td><%= link_to "Feed", :action => 'feed' %></td>
+  </tr>
 </table>

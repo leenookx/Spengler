@@ -111,6 +111,7 @@ class LinksController < ApplicationController
           userlink = UserLink.new
           userlink.user_id = user.id
           userlink.link_id = link.id
+          userlink.keywords = params[:links][:keywords]
           userlink.save
 
           flash[:notice] = 'Link was successfully created.'

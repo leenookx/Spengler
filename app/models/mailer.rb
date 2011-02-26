@@ -1,6 +1,8 @@
 class Mailer < ActionMailer::Base
   
-
+  # #####################################################
+  #
+  # #####################################################
   def invitation(sent_at = Time.now)
     subject    'Mailer#invitation'
     recipients ''
@@ -9,5 +11,4 @@ class Mailer < ActionMailer::Base
     
     body       :greeting => 'Hi,'
   end
-
 end

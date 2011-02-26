@@ -1,5 +1,8 @@
 class AuditTrail < ActiveRecord::Base
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_login_entry(session, ip)
     a = AuditTrail.new
     a.user_id = session[:id]
@@ -11,6 +14,9 @@ class AuditTrail < ActiveRecord::Base
     end
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_logout_entry(session, ip)
     a = AuditTrail.new
     a.user_id = session[:id]
@@ -24,6 +30,9 @@ class AuditTrail < ActiveRecord::Base
     end
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_code_sent_entry(user, ip)
     a = AuditTrail.new
     a.user_id = user.id
@@ -31,6 +40,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_failed_code_sent_entry(entry, ip)
     a = AuditTrail.new
     a.user_id = entry
@@ -38,6 +50,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_avatar_entry(user)
     a = AuditTrail.new
     a.user_id = user.id
@@ -45,6 +60,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_failed_avatar_entry(user)
     a = AuditTrail.new
     a.user_id = user.id
@@ -52,6 +70,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_preregistration_entry(ip_address, id)
     a = AuditTrail.new
     a.user_id = id
@@ -59,6 +80,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_registration_entry(ip_address, id)
     a = AuditTrail.new
     a.user_id = id
@@ -66,6 +90,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_invite_sent_entry(id, ip_address)
     a = AuditTrail.new
     a.user_id = id
@@ -73,6 +100,9 @@ class AuditTrail < ActiveRecord::Base
     a.save
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def self.create_failed_invite_sent_entry(id, ip_address)
     a = AuditTrail.new
     a.user_id = id

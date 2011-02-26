@@ -2,6 +2,9 @@ class Activation < ActiveRecord::Base
   include ApplicationHelper
   belongs_to :user
 
+  # #####################################################
+  #
+  # #####################################################
   def new
     code = generate_unique_code
 

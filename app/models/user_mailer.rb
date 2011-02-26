@@ -1,5 +1,8 @@
 class UserMailer < ActionMailer::Base
 
+  # #####################################################
+  #
+  # #####################################################
   def activation_code(user, activation)
     @subject = "Spengler account activation"
     @body = {}
@@ -10,6 +13,9 @@ class UserMailer < ActionMailer::Base
     @from = EMAIL_CONFIG['email_from']
   end
 
+  # #####################################################
+  #
+  # #####################################################
   def invite(invite, user)
     @subject = "An Invitation to join Spengler"
     @body = {}

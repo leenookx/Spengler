@@ -1,5 +1,8 @@
 class UserInviteJob < Struct.new(:id, :ip)
 
+  # #####################################################
+  #
+  # #####################################################
   def perform
     invite = Invite.find( id )
     user = User.find( invite.user_id )

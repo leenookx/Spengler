@@ -1,5 +1,8 @@
 class UserCodeSenderJob < Struct.new(:id, :ip)
 
+  # #####################################################
+  #
+  # #####################################################
   def perform
     @user = User.find(id)
     @activation = Activation.find_by_user_id(id)

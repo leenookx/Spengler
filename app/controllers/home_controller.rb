@@ -3,6 +3,9 @@ class HomeController < ApplicationController
 
   include ApplicationHelper
 
+  # #####################################################
+  #
+  # #####################################################
   def index
     @title = "Spengler - A bumpy journey into the semantic web."
   end

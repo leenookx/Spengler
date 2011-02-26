@@ -86,18 +86,18 @@ class UserLinksController < ApplicationController
   # PUT /user_links/1.xml
   # ##################################################### 
   def update
-    @user_link = UserLink.find(params[:id])
-
-    respond_to do |format|
-      if @user_link.update_attributes(params[:user_link])
-        flash[:notice] = 'UserLink was successfully updated.'
-        format.html { redirect_to(@user_link) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user_link.errors, :status => :unprocessable_entity }
-      end
-    end
+#    @user_link = UserLink.find(params[:id])
+#
+#    respond_to do |format|
+#      if @user_link.update_attributes(params[:user_link])
+#        flash[:notice] = 'UserLink was successfully updated.'
+#        format.html { redirect_to(@user_link) }
+#        format.xml  { head :ok }
+#      else
+#        format.html { render :action => "edit" }
+#        format.xml  { render :xml => @user_link.errors, :status => :unprocessable_entity }
+#      end
+#    end
   end
 
   # ##################################################### 
@@ -105,13 +105,13 @@ class UserLinksController < ApplicationController
   # DELETE /user_links/1.xml
   # ##################################################### 
   def destroy
-    @user_link = UserLink.find(params[:id])
-    @user_link.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(user_links_url) }
-      format.xml  { head :ok }
-    end
+#    @user_link = UserLink.find(params[:id])
+#    @user_link.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(user_links_url) }
+#      format.xml  { head :ok }
+#    end
   end
 
  private

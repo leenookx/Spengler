@@ -132,18 +132,18 @@ class LinksController < ApplicationController
   # PUT /links/1.xml
   # #####################################################
   def update
-    @link = Link.find(params[:id])
-
-    respond_to do |format|
-      if @link.update_attributes(params[:link])
-        flash[:notice] = 'Link was successfully updated.'
-        format.html { redirect_to(@link) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
-      end
-    end
+#    @link = Link.find(params[:id])
+#
+#    respond_to do |format|
+#      if @link.update_attributes(params[:link])
+#        flash[:notice] = 'Link was successfully updated.'
+#        format.html { redirect_to(@link) }
+#        format.xml  { head :ok }
+#      else
+#        format.html { render :action => "edit" }
+#        format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+#      end
+#    end
   end
 
   # #####################################################
@@ -151,13 +151,13 @@ class LinksController < ApplicationController
   # DELETE /links/1.xml
   # #####################################################
   def destroy
-    @link = Link.find(params[:id])
-    @link.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(links_url) }
-      format.xml  { head :ok }
-    end
+#    @link = Link.find(params[:id])
+#    @link.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to(links_url) }
+#      format.xml  { head :ok }
+#    end
   end
 
  private

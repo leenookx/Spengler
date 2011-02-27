@@ -58,4 +58,19 @@ module ApplicationHelper
     code = Digest::SHA1.hexdigest([Time.now, rand].join)
     return code
   end
+
+  
+  # #####################################################
+  # Checks to see if the user details passed in are for
+  # a valid user or not.
+  # #####################################################
+  def valid_user(params)
+    return @user unless @user.nil?
+
+    if params && !params.empty?
+      return User.find_by_authentication_code( params )
+    else
+      return nil
+    end
+  end
 end

@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  include ApplicationHelper
   layout 'standard'
 
   # #####################################################
@@ -153,20 +154,5 @@ class LinksController < ApplicationController
 #      format.html { redirect_to(links_url) }
 #      format.xml  { head :ok }
 #    end
-  end
-
- private
-
-  # #####################################################
-  # 
-  # #####################################################
-  def valid_user(params)
-    return @user unless @user.nil?
-
-    if params && !params.empty?
-      return User.find_by_authentication_code( params )
-    else
-      return nil
-    end
   end
 end

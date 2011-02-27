@@ -3,6 +3,9 @@ class UserController < ApplicationController
   layout 'standard'
   before_filter :login_required, :only => :my_account
   
+  # #####################################################
+  # 
+  # #####################################################
   def index
     redirect_to :action => 'my_account'
   end
@@ -199,21 +202,6 @@ class UserController < ApplicationController
       puts "Not logged in"
       flash[:error] = "You are not logged in and cannot use this function."
       redirect_to root_url
-    end
-  end
-
- private
-
-  # #####################################################
-  # 
-  # #####################################################
-  def valid_user(params)
-    return @user unless @user.nil?
-
-    if params && !params.empty?
-      return User.find_by_authentication_code( params )
-    else
-      return nil
     end
   end
 end

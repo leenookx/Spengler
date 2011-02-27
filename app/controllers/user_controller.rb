@@ -2,6 +2,10 @@ class UserController < ApplicationController
   include ApplicationHelper
   layout 'standard'
   before_filter :login_required, :only => :my_account
+  
+  def index
+    redirect_to :action => 'my_account'
+  end
 
 
   # #####################################################

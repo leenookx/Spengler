@@ -175,7 +175,7 @@ class UserController < ApplicationController
   end
 
   # ##################################################################
-  # Display the users url feed
+  # Display the users recent URL list as a ATOM feed.
   # ##################################################################
   def feed
     @user = valid_user( request.headers["authentication-token"] || params[:auth_code] || params[:id] )
@@ -184,7 +184,8 @@ class UserController < ApplicationController
       @user_links = UserLinks.find_all_by_user_id(@user.id, :limit => 20, :order => "updated_at desc")
       if @user_links
         render(:layout => false, 
-               :locals => { :username => @user.name, :user_links => @user_links })
+                :locals => { :username => @user.name, 
+                              :user_links => @user_links })
       else
         # TODO: What should we do here?
         flash[:warning] = "You have not Spengalised anything yet."

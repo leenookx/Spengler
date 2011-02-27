@@ -32,7 +32,7 @@ class UserController < ApplicationController
 
             AuditTrail.create_login_entry(session, request.remote_ip)
 
-            redirect_to session[:return_to] || root_url
+            redirect_to session[:return_to] || :action => 'my_account'
           else
             flash[:error] = 'Invalid login.'
             redirect_to :action => 'login', :name => params[:user][:name]

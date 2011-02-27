@@ -36,9 +36,14 @@ class UserLinksController < ApplicationController
   def show
     @user_link = UserLink.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user_link }
+    if @user_link
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @user_link }
+      end
+    else
+      flash[:notice] = 'UserLink was successfully created.'
+        redirect_to root_url
     end
   end
 

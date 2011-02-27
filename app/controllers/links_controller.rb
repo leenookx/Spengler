@@ -34,13 +34,8 @@ class LinksController < ApplicationController
   # GET /links/1.xml
   # #####################################################
   def show
-    @link = Link.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @link }
-      format.json { render :json => @link }
-    end
+    flash[:error] = 'Function not available.'
+    redirect_to root_url
   end
 
   # #####################################################

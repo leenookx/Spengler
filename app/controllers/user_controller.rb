@@ -199,9 +199,17 @@ class UserController < ApplicationController
         redirect_to root_url
       end
     else
-      puts "Not logged in"
       flash[:error] = "You are not logged in and cannot use this function."
       redirect_to root_url
+    end
+  end
+  
+  # ##################################################################
+  # Display the users recent URL list as a ATOM feed.
+  # ##################################################################
+  def links
+    if logged_in?
+      @user_links = UserLinks.find_all_by_user_id(@user.id, :limit => 20, :order => "updated_at desc")
     end
   end
 end

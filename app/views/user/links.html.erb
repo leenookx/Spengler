@@ -1,0 +1,23 @@
+<h2>Your Spengalised Links</h2>
+
+<div id="links">
+<% if !@user_links.nil? %>
+  <table width="100%" cellspacing="2" cellpadding="2" align="left" border="0">
+    <% @user_links.each do |link| %>
+      <tr>
+        <td>
+          <%= link_to "#{link.url}", "#{link.title}" %>
+        </td>
+        <td>
+          <%= "link description goes here" %>
+        </td>
+        <td>
+          <%= "link keywords" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>You have not spengalised anything.</p>
+<% end %>
+</div>
